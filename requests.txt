@@ -1,0 +1,35 @@
+TEACHER APP:
+Insert new student: POST request
+StudentList: GET request
+FindStudent: GET request
+	ExamStudentDetails: GET request ( studentexams associated with the exam for specific student )
+	Make The Exam Availavel For the 2nd time for specific student: PUT request
+
+
+Statistics: GET request
+
+ExamView
+	ExamBank: GET request
+	ExamDetails: GET request ( Questions and Answers for the exam )
+	EidtExam: PUT request
+	DeleteExam: DELETE request
+
+StudentExamView
+	[-]ExamStudent: GET request ( all the studentexams associated with the exam )
+	MakeExamAvailable For the 2nd time for All student: PUT request
+
+
+STUDENT APP:
+profile: GET request
+EditProfile: PUT request
+
+newExamList: GET request
+prevExamList: GET request
+prevExamDetails: GET request
+StartExam: GET request with insert new exam ( is that possible ? )
+ExamQuestionList: GET request ( return the exam with its question and available answers )
+SubmitAnswers: POST request
+
+TODO: AskForRetakeExam: POST request
+
+
