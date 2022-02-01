@@ -1,2 +1,0 @@
-# El-tahdy
-Educational website
