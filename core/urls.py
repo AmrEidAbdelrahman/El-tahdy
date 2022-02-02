@@ -1,6 +1,7 @@
 from django.urls import path
+from rest_framework.authtoken import views
 
-from .views import StudentView, ExamList, QuestionList, AnswerList, StudentExamView
+from .views import StudentView, ExamView, StudentExamView
 
 
 urlpatterns = [
@@ -10,16 +11,18 @@ urlpatterns = [
 	# path('make-available-again/<exam-id>/', MakeAvailable),
 
 	## the student who take a specific exam
-	#path('exam-taken/<pk>/', StudentExamView.as_view({'get':'retrieve'}), name='exam-student-list'),
-	path('exam/<pk>/student-list/', StudentExamView.as_view({'get':'retrieve'}), name="exam-student-list"),
 
 
-	path('exams/', ExamList.as_view({'get':'list', 'post':'create'}), name='exam-list'),
-	path('exams/<pk>/', ExamList.as_view({'put':'update', 'get':'retrieve', 'delete':'destroy'}), name='exam-operations'),
+	path('exams/', ExamView.as_view({'get':'list', 'post':'create'}), name='exam-list'),
+	path('exams/<pk>/', ExamView.as_view({'put':'update', 'get':'retrieve', 'delete':'destroy'}), name='exam-operations'),
+	path('exams/<pk>/student-list/', StudentExamView.as_view({'get':'retrieve'}), name="exam-student-list"),
 
-	path('question-list/', QuestionList.as_view(), name='question-list'),
+	# create a StudentExam object for the student to use it in saving the student answer
+	path('start-exam/', StudentExamView.as_view({'post':'create'}), name="start-exam"),
+	# make the exam available again for specific student
+	path('take-again/', StudentExamView.as_view({'put':'update'}), name="take-again"),
+	#path('exams/<int:exam_id>/<int:student_id>/', ExamView.as_view({'post', 'start_exam'}), name="start-exam"),
 
-	path('answer-list/', AnswerList.as_view(), name='answer-list'),
-
+	path('api-token-auth/', views.obtain_auth_token),
 
 ]

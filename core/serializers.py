@@ -19,7 +19,6 @@ class DynamicDepthSerializer(serializers.ModelSerializer):
         if depth:
             self.Meta.depth = depth
 
-        
 
 class StudentAnswerSerializer(DynamicDepthSerializer):
     class Meta:
@@ -130,7 +129,6 @@ class ExamSerializer(WritableNestedModelSerializer):
 # ====================================================================
 
 '''
-'''
 class Student1Serializer(DynamicDepthSerializer):
     """
     Helper for StudentExamSerializer
@@ -172,6 +170,7 @@ class ExamDetailsSerializer(serializers.ModelSerializer):
     #    return obj.studentexam_set.stud
 
 
+'''
 
 
 

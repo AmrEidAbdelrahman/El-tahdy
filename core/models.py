@@ -1,5 +1,9 @@
 from django.db import models
 
+
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication , TokenAuthentication
+
+
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -24,7 +28,7 @@ class Student(models.Model):
 
 
 	def __str__(self):
-		return f'{self.user.username}'
+		return f'{self.user.username} _ {self.id}'
 
 
 
@@ -84,8 +88,11 @@ class StudentExam(models.Model):
 	exam = models.ForeignKey("Exam", on_delete=models.CASCADE)
 	start_time = models.DateTimeField(auto_now_add=True)
 	end_time = models.DateTimeField(auto_now=True)
-	# TODO: take_again = models.BooleanField(default=False)
+	take_again = models.BooleanField(default=False)
 	# degree = models.FloatField(null=True, blank=True)	
+
+	class Meta:
+		unique_together = ['student', 'exam']
 
 
 	def __str__(self):
@@ -120,3 +127,19 @@ class StudentAnswer(models.Model):
 
 
 
+class BearerAuthentication(TokenAuthentication):
+    '''
+    Simple token based authentication using utvsapitoken.
+
+    Clients should authenticate by passing the token key in the 'Authorization'
+    HTTP header, prepended with the string 'Bearer '.  For example:
+
+    Authorization: Bearer 956e252a-513c-48c5-92dd-bfddc364e812
+    '''
+    keyword = 'Bearer'
+
+
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+
+    def enforce_csrf(self, request):
+        return  # To not perform the csrf check previously happening
