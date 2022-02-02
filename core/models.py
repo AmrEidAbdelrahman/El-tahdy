@@ -31,7 +31,7 @@ class Student(models.Model):
 
 class Exam(models.Model):
 	#teacher = models.ForeignKey(User, on_delete=models.CASCADE)
-	subject = models.CharField(max_length=10)
+	subject = models.CharField(max_length=100)
 	duration = models.IntegerField(default=10)
 	published = models.BooleanField(default=False)
 	published_time = models.DateTimeField(null=True, blank=True)
