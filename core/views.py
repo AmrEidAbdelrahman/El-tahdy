@@ -12,6 +12,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework import filters
+from rest_framework.decorators import action
 
 from rest_framework import status
 
@@ -68,12 +69,14 @@ class ExamView(ModelViewSet):
             return Exam.objects.all().filter(published=published)
         return Exam.objects.all().filter()
 
+    @action(detail=True, methods=['put', 'get'])
+    def take_again_all(self, request, pk=None):
+        print("#####$$$$")
+        exam = self.get_object()
+        exam.studentexam_set.all().update(take_again=True)
+        print(exam)
+        return Response({"response":"take again all function"}, status=200)
 
-    def start_exam(self):
-        print(self)
-        print("#######")
-
-        return Response({"test":"test start exam"})
 
 class StudentExamView(ModelViewSet):
     serializer_class = StudentExamSerializer
@@ -100,6 +103,9 @@ class StudentExamView(ModelViewSet):
         student_exam.save()
         print(student_exam)
         return Response({"response":"the exam is now available"}, status=200)
+
+    
+
 
 
 
