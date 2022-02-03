@@ -16,7 +16,7 @@ from rest_framework.decorators import action
 
 from rest_framework import status
 
-from .serializers import StudentSerializer, ExamSerializer, StudentExamSerializer
+from .serializers import StudentSerializer, ExamSerializer, StudentExamSerializer, StudentExamAnswerSerializer
 
 from .models import Student, Exam, Question, Answer, StudentExam
 
@@ -105,110 +105,28 @@ class StudentExamView(ModelViewSet):
         return Response({"response":"the exam is now available"}, status=200)
 
     
-
-
-
-
-
-''' 
-@require_http_methods(["POST"])
-@csrf_exempt
-def start_exam(request, exam_id):
-    print("#######################")
-    print(request.auth)
-    print(request.user)
-    student = request.user.student
-    exam = Exam.objects.get(pk=exam_id)
-    # check the existance of an instance of the same (student, exam)
-    # check the exam exist 
-    student_exam = StudentExam(student=student, exam=exam)
-    student_exam.save()
-    print(student_exam)
-    return Response({"student_exam":student_exam}, status=status.HTTP_204_NO_CONTENT)
-    
-    #Response({"error":"There is some thing wrong"})
-'''
-
+class StudentExamAnswer(ModelViewSet):
+    serializer_class = StudentExamAnswerSerializer
+    queryset = StudentExam.objects.all()
 
 
 '''
-class ExamView(APIView):
-    def get(self, request, *args, **kwargs):
-        exams = Exam.objects.all()
-        serializer = ExamSerializer(exams, many=True)
-        return Response(serializer.data)
+{
+    student_exam_id:1,
+    student_answer_set: [
+        {
+            question_id:2,
+            asnwer_id:3,
+        },
+        {
+            question_id:2,
+            asnwer_id:3,
+        },
+        {
+            question_id:2,
+            asnwer_id:3,
+        },
+    ]
+}
 
-    def post(self, request, *args, **kwargs):
-        serializer = ExamSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-    class StudentExamView(ModelViewSet):
-    serializer_class = StudentExamSerializer
-
-    def get_queryset(self):
-        return StudentExam.objects.all()
-'''   
-
-'''
-    def get_queryset(self):
-        queryset = Student.objects.all()
-        name = self.request.query_params.get("name")
-        _class = self.request.query_params.get("class")
-        print(_class)
-        if name :
-            #TODO: add the filter on the class too
-            return queryset.filter(name__icontains=name)
-        return queryset
-'''
-    
-
-
-
-'''
-    class StudentList(APIView):
-        def get(self, request, *args, **kwargs):
-            students = Student.objects.all()
-            serializer = StudentSerializer(students, many=True)
-            return Response(serializer.data)
-
-        def post(self, request, *args, **kwargs):
-            serializer = StudentSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-    class QuestionList(APIView):
-        def get(self, request, *args, **kwargs):
-            questions = Question.objects.all()
-            serializer = QuestionSerializer(questions, many=True)
-            return Response(serializer.data)
-
-        def post(self, request, *args, **kwargs):
-            serializer = QuestionSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-    class AnswerList(APIView):
-        def get(self, request, *args, **kwargs):
-            questions = Answer.objects.all()
-            serializer = AnswerSerializer(questions, many=True)
-            return Response(serializer.data)
-
-        def post(self, request, *args, **kwargs):
-            serializer = AnswerSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 '''

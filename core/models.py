@@ -96,7 +96,7 @@ class StudentExam(models.Model):
 
 
 	def __str__(self):
-		return f'{self.student.user.username} exam({self.exam.subject})'
+		return f'{self.student.user.username} exam({self.exam.subject}) _ {self.id}'
 
 	def get_total_degree(self):
 		return self.exam.total_degree()
@@ -118,6 +118,10 @@ class StudentAnswer(models.Model):
 
 	class Meta:
 		unique_together = ['studentexam', 'question']
+
+		#constraints = [
+		#	models.CheckConstraint(check=models.Q(answer__in=question.answer_set.all()), name='the answer from the question answers set'),
+		#]
 
 	def __str__(self):
 		return f'{self.studentexam.student.user.username} select {self.answer}'

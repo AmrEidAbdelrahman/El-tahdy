@@ -127,6 +127,33 @@ class ExamSerializer(WritableNestedModelSerializer):
 
 # ====================================================================
 # ====================================================================
+class QuestionSerializer(DynamicDepthSerializer):
+
+    class Meta:
+        model = Question
+        fields = ['id', 'question', 'degree', 'answer_set']
+        depth=1
+
+class StudentAnswer1Serializer(DynamicDepthSerializer):
+    question = QuestionSerializer()
+
+    class Meta:
+        model = StudentAnswer
+        fields = ['question', 'answer', 'degree']
+
+class StudentExamAnswerSerializer(WritableNestedModelSerializer):
+    studentanswer_set = StudentAnswer1Serializer(many=True)
+
+    class Meta:
+        model = StudentExam
+        fields = ['id', 'exam', 'studentanswer_set']
+        depth = 2
+
+
+
+
+# ====================================================================
+# ====================================================================
 
 '''
 class Student1Serializer(DynamicDepthSerializer):

@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework.authtoken import views
 
-from .views import StudentView, ExamView, StudentExamView
+from .views import StudentView, ExamView, StudentExamView, StudentExamAnswer
 
 
 urlpatterns = [
@@ -21,6 +21,8 @@ urlpatterns = [
 	# make the exam available again for specific student
 	path('take-again/', StudentExamView.as_view({'put':'update'}), name="take-again"),
 	
+	path('student-exam-answer/', StudentExamAnswer.as_view({"post":"create"})),
+	path('student-exam-answer/<pk>/', StudentExamAnswer.as_view({'get':'retrieve'}), name="student-exam-answer"),
 
 	path('api-token-auth/', views.obtain_auth_token),
 
