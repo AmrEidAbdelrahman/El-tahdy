@@ -10,20 +10,19 @@ from django.contrib.auth.models import User
 
 
 CLASS_CHOICES = (
-		('F', "الصف الاول"),
-		('S', "الصف الثاني"),
-		('T_S', "الصف الثالث علمي"),
-		('T_M', "الصف الثالث علمي رياضخ"),
-		('T_A', "الصف الثالث ادبي")
+		('اولي', "اولي"),
+		('ثانيه علمي', "ثانيه علمي"),
+		('ثانيه ادبي', "ثانيه ادبي"),
+		('ثالثه', "ثالثه")
 	)
 
 
 class Student(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	profile_pic = models.ImageField(upload_to="profile_pics", default="default_pp.jpg")
+	#profile_pic = models.ImageField(upload_to="profile_pics", default="default_pp.jpg")
 	phone = models.CharField(max_length=15)
 	parent_phone = models.CharField(max_length=15)
-	_class = models.CharField(max_length=3, choices=CLASS_CHOICES)
+	year = models.CharField(max_length=15, choices=CLASS_CHOICES)
 	#create_time = models.DateTimeField(auto_now_add=True)
 
 
@@ -36,6 +35,7 @@ class Student(models.Model):
 class Exam(models.Model):
 	#teacher = models.ForeignKey(User, on_delete=models.CASCADE)
 	subject = models.CharField(max_length=100)
+	title = models.CharField(max_length=150, null=True)
 	duration = models.IntegerField(default=10)
 	published = models.BooleanField(default=False)
 	published_time = models.DateTimeField(null=True, blank=True)

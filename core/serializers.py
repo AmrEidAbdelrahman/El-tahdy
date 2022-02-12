@@ -57,7 +57,7 @@ class StudentSerializer(DynamicDepthSerializer):
 
     class Meta:
         model = Student
-        fields = ['id', 'username', 'profile_pic', 'user', 'phone', 'parent_phone', '_class', '_class_display', 'studentexam_set']
+        fields = ['id', 'username', 'user', 'phone', 'phone2', '_class', '_class_display', 'studentexam_set']
         # depth = 2
 
     def get__class_display(self, obj):
@@ -88,7 +88,7 @@ class StudentSerializer(DynamicDepthSerializer):
             pass
         user.save()
         instance.phone = validated_data["phone"]
-        instance.parent_phone = validated_data["parent_phone"]
+        instance.phone2 = validated_data["phone2"]
         instance._class = validated_data["_class"]
         instance.save()
         return instance
