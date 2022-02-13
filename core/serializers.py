@@ -52,16 +52,16 @@ class StudentSerializer(DynamicDepthSerializer):
     user = UserSerializer(write_only=True)
     username = serializers.SerializerMethodField()
     studentexam_set = StudentExamSerializer(many=True, read_only=True, required=False)
-    _class_display = serializers.SerializerMethodField()
+    year_display = serializers.SerializerMethodField()
     #password = serializers.SerializerMethodField(write_only=True, required=False)
 
     class Meta:
         model = Student
-        fields = ['id', 'username', 'user', 'phone', 'phone2', '_class', '_class_display', 'studentexam_set']
+        fields = ['id', 'username', 'user', 'phone', 'parent_phone', 'year', 'year_display', 'studentexam_set']
         # depth = 2
 
-    def get__class_display(self, obj):
-        return obj.get__class_display()
+    def get_year_display(self, obj):
+        return obj.get_year_display()
 
     def get_username(self, obj):
         return obj.user.username
@@ -89,7 +89,7 @@ class StudentSerializer(DynamicDepthSerializer):
         user.save()
         instance.phone = validated_data["phone"]
         instance.phone2 = validated_data["phone2"]
-        instance._class = validated_data["_class"]
+        instance.year = validated_data["year"]
         instance.save()
         return instance
 
@@ -160,12 +160,12 @@ class Student1Serializer(DynamicDepthSerializer):
     """
     Helper for StudentExamSerializer
     """
-    _class = serializers.CharField(source='get__class_display')
+    year = serializers.CharField(source='get_year_display')
     username = serializers.CharField(source='user.username')
     
     class Meta:
         model = Student
-        fields = ['username', 'phone', '_class']
+        fields = ['username', 'phone', 'year']
     
 class StudentExam1Serializer(DynamicDepthSerializer):
     """

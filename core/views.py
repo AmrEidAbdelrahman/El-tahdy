@@ -28,10 +28,10 @@ from .models import Student, Exam, Question, Answer, StudentExam
 class StudentView(ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    #authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = (IsAuthenticated, )
-    #permission_classes = [IsAdminUser]
-    filterset_fields = ['user__username', '_class']
+    #authenticationclasses = [SessionAuthentication, BasicAuthentication]
+    permissionclasses = (IsAuthenticated, )
+    #permissionclasses = [IsAdminUser]
+    filterset_fields = ['user__username', 'year']
     search_fields = ['user__username']
     ordering_fields = '__all__'
 
@@ -46,9 +46,9 @@ class StudentView(ModelViewSet):
         context['depth'] = depth
 
         if self.action == "list":
-            context['exclude'] = ['create_time','studentexam_set','_class']
+            context['exclude'] = ['create_time','studentexam_set','year']
         elif self.action == "retrieve":
-            context['exclude'] = ['create_time','_class', 'studentanswer_set']
+            context['exclude'] = ['create_time','year', 'studentanswer_set']
         return context
 
     def destroy(self, request, *args, **kwargs):
@@ -60,7 +60,7 @@ class StudentView(ModelViewSet):
 
 class ExamView(ModelViewSet):
     serializer_class = ExamSerializer
-    #authentication_classes = [SessionAuthentication, BasicAuthentication]
+    #authenticationclasses = [SessionAuthentication, BasicAuthentication]
 
 
     def get_queryset(self):
@@ -81,7 +81,7 @@ class ExamView(ModelViewSet):
 class StudentExamView(ModelViewSet):
     serializer_class = StudentExamSerializer
     queryset = StudentExam.objects.all()
-    #authentication_classes = [SessionAuthentication, BasicAuthentication]
+    #authenticationclasses = [SessionAuthentication, BasicAuthentication]
 
     def create(self, request, *args, **kwargs):
         student = request.user.student
