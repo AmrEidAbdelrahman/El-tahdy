@@ -13,8 +13,11 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework import filters
 from rest_framework.decorators import action
-
 from rest_framework import status
+
+import json
+
+
 
 from .serializers import StudentSerializer, ExamSerializer, StudentExamSerializer, StudentExamAnswerSerializer
 
@@ -31,9 +34,9 @@ class StudentView(ModelViewSet):
     #authenticationclasses = [SessionAuthentication, BasicAuthentication]
     permissionclasses = (IsAuthenticated, )
     #permissionclasses = [IsAdminUser]
-    filterset_fields = ['user__username', 'year']
-    search_fields = ['user__username']
-    ordering_fields = '__all__'
+    #filterset_fields = ['user__username', 'year']
+    #search_fields = ['user__username']
+    #ordering_fields = '__all__'
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -48,7 +51,7 @@ class StudentView(ModelViewSet):
         if self.action == "list":
             context['exclude'] = ['create_time','studentexam_set','year']
         elif self.action == "retrieve":
-            context['exclude'] = ['create_time','year', 'studentanswer_set']
+            context['exclude'] = ['create_time', 'studentanswer_set', 'user']
         return context
 
     def destroy(self, request, *args, **kwargs):
@@ -84,8 +87,11 @@ class StudentExamView(ModelViewSet):
     #authenticationclasses = [SessionAuthentication, BasicAuthentication]
 
     def create(self, request, *args, **kwargs):
+        mydata = json.loads(request.body)
+        
         student = request.user.student
-        exam_id = request.POST.get("exam_id")
+        exam_id = mydata.get("exam_id")
+        print("#####",exam_id)
         exam = Exam.objects.get(pk=exam_id)
         # check the existance of an instance of the same (student, exam)
         # check the exam exist 

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from .models import Student, Question, Exam, Answer, StudentAnswer, StudentExam
 
 
-class DynamicDepthSerializer(serializers.ModelSerializer):
+class DynamicDepthSerializer(WritableNestedModelSerializer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         exclude = self.context.get('exclude')
@@ -41,7 +41,7 @@ class StudentExamSerializer(DynamicDepthSerializer):
 
 class UserSerializer(DynamicDepthSerializer):
     username = serializers.CharField()
-    password = serializers.CharField(required=False)
+    password = serializers.CharField(required=False, write_only=True)
 
     class Meta:
         model = User
@@ -49,19 +49,19 @@ class UserSerializer(DynamicDepthSerializer):
 
 
 class StudentSerializer(DynamicDepthSerializer):
-    user = UserSerializer(write_only=True)
+    user = UserSerializer()
     username = serializers.SerializerMethodField()
     studentexam_set = StudentExamSerializer(many=True, read_only=True, required=False)
-    year_display = serializers.SerializerMethodField()
+    #year_display = serializers.SerializerMethodField()
     #password = serializers.SerializerMethodField(write_only=True, required=False)
 
     class Meta:
         model = Student
-        fields = ['id', 'username', 'user', 'phone', 'parent_phone', 'year', 'year_display', 'studentexam_set']
+        fields = ['id', 'username', 'user', 'phone', 'parent_phone', 'year', 'studentexam_set']
         # depth = 2
 
-    def get_year_display(self, obj):
-        return obj.get_year_display()
+    #def get_year_display(self, obj):
+    #    return obj.get_year_display()
 
     def get_username(self, obj):
         return obj.user.username
@@ -88,7 +88,7 @@ class StudentSerializer(DynamicDepthSerializer):
             pass
         user.save()
         instance.phone = validated_data["phone"]
-        instance.phone2 = validated_data["phone2"]
+        instance.parent_phone = validated_data["parent_phone"]
         instance.year = validated_data["year"]
         instance.save()
         return instance

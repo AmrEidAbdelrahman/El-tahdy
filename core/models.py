@@ -44,7 +44,7 @@ class Exam(models.Model):
 
 
 	def __str__(self):
-		return f'{self.subject}'
+		return f'{self.subject} _ {self.id}'
 
 
 	def total_degree(self):
