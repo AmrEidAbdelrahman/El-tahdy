@@ -1,9 +1,9 @@
 TEACHER APP:
-Insert new student: POST request
-StudentList: GET request
-FindStudent: GET request
-ExamStudentDetails: GET request ( studentexams associated with the exam for specific student )
-Make The Exam Availavel For the 2nd time for specific student: PUT request
+[-] Insert new student: POST request
+[-] StudentList: GET request
+[ ] FindStudent: GET request
+[-] ExamStudentDetails: GET request ( studentexams associated with the exam for specific student )
+[-] Make The Exam Availavel For the 2nd time for specific student: PUT request
 
 
 Statistics: GET request

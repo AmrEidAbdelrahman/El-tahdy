@@ -61,6 +61,7 @@ class StudentView(ModelViewSet):
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class ExamView(ModelViewSet):
     serializer_class = ExamSerializer
     #authenticationclasses = [SessionAuthentication, BasicAuthentication]
@@ -74,7 +75,7 @@ class ExamView(ModelViewSet):
 
     @action(detail=True, methods=['put', 'get'])
     def take_again_all(self, request, pk=None):
-        print("#####$$$$")
+        #print("#####$$$$")
         exam = self.get_object()
         exam.studentexam_set.all().update(take_again=True)
         print(exam)
