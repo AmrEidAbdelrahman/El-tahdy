@@ -1,0 +1,688 @@
+openapi: 3.0.3
+info:
+  title: El-Tahady
+  version: 1.0.0
+  description: El-Tahady API for El-Tahady Website
+paths:
+  /api/api-token-auth/:
+    post:
+      operationId: api_api_token_auth_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+  /api/exams/:
+    get:
+      operationId: api_exams_list
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exam'
+          description: ''
+    post:
+      operationId: api_exams_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Exam'
+        required: true
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+  /api/exams/{id}/:
+    get:
+      operationId: api_exams_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this exam.
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+    put:
+      operationId: api_exams_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this exam.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Exam'
+        required: true
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+    delete:
+      operationId: api_exams_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this exam.
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/exams/{id}/student-list/:
+    get:
+      operationId: api_exams_student_list_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this student exam.
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentExam'
+          description: ''
+  /api/exams/{id}/take-again-all/:
+    put:
+      operationId: api_exams_take_again_all_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this exam.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Exam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Exam'
+        required: true
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+          description: ''
+  /api/start-exam/:
+    post:
+      operationId: api_start_exam_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentExam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StudentExam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudentExam'
+        required: true
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentExam'
+          description: ''
+  /api/student-exam-answer/:
+    post:
+      operationId: api_student_exam_answer_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentExamAnswer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StudentExamAnswer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudentExamAnswer'
+        required: true
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentExamAnswer'
+          description: ''
+  /api/student-exam-answer/{id}/:
+    get:
+      operationId: api_student_exam_answer_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this student exam.
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentExamAnswer'
+          description: ''
+  /api/students/:
+    get:
+      operationId: api_students_list
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+          description: ''
+    post:
+      operationId: api_students_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Student'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          description: ''
+  /api/students/{id}/:
+    get:
+      operationId: api_students_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this student.
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          description: ''
+    put:
+      operationId: api_students_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this student.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Student'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          description: ''
+    delete:
+      operationId: api_students_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this student.
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/take-again/:
+    put:
+      operationId: api_take_again_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentExam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StudentExam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudentExam'
+        required: true
+      security:
+      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentExam'
+          description: ''
+components:
+  schemas:
+    Answer:
+      type: object
+      description: Adds nested create feature
+      properties:
+        answer:
+          type: string
+        create_time:
+          type: string
+          format: date-time
+          readOnly: true
+        update_time:
+          type: string
+          format: date-time
+          readOnly: true
+        the_correct_answer:
+          type: boolean
+      required:
+      - answer
+      - create_time
+      - update_time
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - password
+      - token
+      - username
+    Exam:
+      type: object
+      description: Adds nested create feature
+      properties:
+        subject:
+          type: string
+          maxLength: 100
+        duration:
+          type: integer
+        published:
+          type: boolean
+        published_time:
+          type: string
+          format: date-time
+          nullable: true
+        ended:
+          type: boolean
+        create_time:
+          type: string
+          format: date-time
+          readOnly: true
+        question_set:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+      required:
+      - create_time
+      - question_set
+      - subject
+    Nested:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        subject:
+          type: string
+          maxLength: 100
+        title:
+          type: string
+          nullable: true
+          maxLength: 150
+        duration:
+          type: integer
+        published:
+          type: boolean
+        published_time:
+          type: string
+          format: date-time
+          nullable: true
+        ended:
+          type: boolean
+        create_time:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - create_time
+      - id
+      - subject
+    Question:
+      type: object
+      description: Adds nested create feature
+      properties:
+        question:
+          type: string
+        create_time:
+          type: string
+          format: date-time
+          readOnly: true
+        update_time:
+          type: string
+          format: date-time
+          readOnly: true
+        degree:
+          type: integer
+        answer_set:
+          type: array
+          items:
+            $ref: '#/components/schemas/Answer'
+      required:
+      - create_time
+      - degree
+      - question
+      - update_time
+    Student:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+        user:
+          $ref: '#/components/schemas/User'
+        phone:
+          type: string
+          maxLength: 15
+        parent_phone:
+          type: string
+          maxLength: 15
+        year:
+          $ref: '#/components/schemas/YearEnum'
+        studentexam_set:
+          type: array
+          items:
+            $ref: '#/components/schemas/StudentExam'
+          readOnly: true
+      required:
+      - id
+      - parent_phone
+      - phone
+      - studentexam_set
+      - user
+      - username
+      - year
+    StudentAnswer1:
+      type: object
+      description: Adds nested create feature
+      properties:
+        question:
+          $ref: '#/components/schemas/Question'
+        answer:
+          type: integer
+        degree:
+          type: number
+          format: float
+          nullable: true
+      required:
+      - answer
+      - question
+    StudentExam:
+      type: object
+      description: Adds nested create feature
+      properties:
+        exam:
+          type: integer
+        subject:
+          type: string
+          readOnly: true
+        start_time:
+          type: string
+          format: date-time
+          readOnly: true
+        end_time:
+          type: string
+          format: date-time
+          readOnly: true
+        total_degree:
+          type: string
+          readOnly: true
+        total_earn:
+          type: string
+          readOnly: true
+        studentanswer_set:
+          type: array
+          items:
+            type: integer
+      required:
+      - end_time
+      - exam
+      - start_time
+      - studentanswer_set
+      - subject
+      - total_degree
+      - total_earn
+    StudentExamAnswer:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        exam:
+          allOf:
+          - $ref: '#/components/schemas/Nested'
+          readOnly: true
+        studentanswer_set:
+          type: array
+          items:
+            $ref: '#/components/schemas/StudentAnswer1'
+      required:
+      - exam
+      - id
+      - studentanswer_set
+    User:
+      type: object
+      description: Adds nested create feature
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - username
+    YearEnum:
+      enum:
+      - اولي
+      - ثانيه علمي
+      - ثانيه ادبي
+      - ثالثه
+      type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    tokenAuth:
+      type: http
+      scheme: bearer
