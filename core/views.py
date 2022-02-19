@@ -49,7 +49,7 @@ class StudentView(ModelViewSet):
         context['depth'] = depth
 
         if self.action == "list":
-            context['exclude'] = ['create_time','studentexam_set','year']
+            context['exclude'] = ['create_time','studentexam_set']
         elif self.action == "retrieve":
             context['exclude'] = ['create_time', 'studentanswer_set', 'user']
         return context

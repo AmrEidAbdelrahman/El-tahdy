@@ -121,7 +121,7 @@ class ExamSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = Exam
-        fields = ['subject', 'duration', 'published', 'published_time', 'ended', 'create_time', 'question_set']
+        fields = ['id','subject', 'duration', 'published', 'published_time', 'ended', 'create_time', 'question_set']
 
     
 
