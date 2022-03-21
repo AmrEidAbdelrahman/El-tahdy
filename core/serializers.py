@@ -34,7 +34,8 @@ class StudentExamSerializer(DynamicDepthSerializer):
 
     class Meta:
         model = StudentExam
-        fields = ['exam', 'subject', 'start_time', 'end_time', 'total_degree','total_earn', 'studentanswer_set']
+        fields = ['id','exam', 'subject', 'start_time', 'end_time', 'total_degree','total_earn', 'studentanswer_set']
+        depth=1
 
     def get_subject(self,obj):
         return obj.exam.subject
@@ -101,7 +102,7 @@ class StudentSerializer(DynamicDepthSerializer):
 class AnswerSerializer(DynamicDepthSerializer):
     class Meta:
         model = Answer
-        fields = ['answer', 'create_time', 'update_time', 'the_correct_answer']
+        fields = ['answer', 'the_correct_answer']
 
 
 
@@ -111,7 +112,7 @@ class QuestionSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['question', 'create_time', 'update_time', 'degree' , 'answer_set']
+        fields = ['question', 'degree' , 'answer_set']
         depth = 1
 
 
