@@ -42,7 +42,7 @@ class StudentExamSerializer(DynamicDepthSerializer):
         return obj.exam.subject
 
     def get_studentanswer_set(self, obj):
-        return obj.studentanswer_set
+        return obj.studentanswer_set.all()
 
 class UserSerializer(DynamicDepthSerializer):
     username = serializers.CharField()
