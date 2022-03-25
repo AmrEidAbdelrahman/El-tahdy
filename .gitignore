@@ -2,6 +2,7 @@
 error.html
 requests.txt
 test.html
+db.sqlite3
 
 ### OSX ###
 .DS_Store

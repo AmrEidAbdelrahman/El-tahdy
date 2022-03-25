@@ -31,6 +31,7 @@ class StudentExamSerializer(DynamicDepthSerializer):
     total_degree = serializers.CharField(source="get_total_degree", read_only=True)
     total_earn = serializers.CharField(source="get_total_earn", read_only=True)
     subject = serializers.SerializerMethodField()
+    studentanswer_set = serializers.SerializerMethodField()
 
     class Meta:
         model = StudentExam
@@ -39,6 +40,9 @@ class StudentExamSerializer(DynamicDepthSerializer):
 
     def get_subject(self,obj):
         return obj.exam.subject
+
+    def get_studentanswer_set(self, obj):
+        return obj.studentanswer_set
 
 class UserSerializer(DynamicDepthSerializer):
     username = serializers.CharField()
